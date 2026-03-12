@@ -3,16 +3,170 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Website</title>
+    <title>ATS Signal Engine Blueprint</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>Welcome to ATS</h1>
-      <p>This is a simple website created for your project.</p>
-      <button id="greetBtn">Click me</button>
-      <p id="message" aria-live="polite"></p>
+    <header class="hero">
+      <p class="eyebrow">Advanced Trading Software (ATS)</p>
+      <h1>Real-Time Signal Engine Plan & Design</h1>
+      <p>
+        A web-based trading intelligence platform that fuses order flow, order book dynamics,
+        liquidity heatmaps, and big-order clusters to produce fast buy/sell signals.
+      </p>
+    </header>
+
+    <main class="layout">
+      <section class="card" id="product-vision">
+        <h2>1) Product Vision & Outcome</h2>
+        <ul>
+          <li><strong>Primary objective:</strong> Deliver actionable BUY/SELL/WAIT signals in seconds, not minutes.</li>
+          <li><strong>Target users:</strong> Intraday futures, crypto, and FX traders requiring low-latency decisions.</li>
+          <li><strong>Performance goal:</strong> Aim for ~80% signal quality in controlled market regimes using strict validation and risk filters.</li>
+          <li><strong>Operator promise:</strong> Surface confidence, context, and invalidation points so users do not sit uncertain in the market.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="core-engine">
+        <h2>2) Signal Engine Design (BUY/SELL Core)</h2>
+        <div id="signalBadge" class="signal-badge" aria-live="polite">Live Example Signal: WAIT</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Module</th>
+                <th>What it Detects</th>
+                <th>Signal Influence</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Order Flow Analyzer</td>
+                <td>Aggressive market buys/sells, CVD shifts, imbalance bursts</td>
+                <td>+Trend continuation score / -Reversal score</td>
+              </tr>
+              <tr>
+                <td>Order Book Intelligence</td>
+                <td>Spoofing probability, stacked liquidity, pull/flip behavior</td>
+                <td>Confirms or blocks false momentum entries</td>
+              </tr>
+              <tr>
+                <td>Liquidity Heatmap Engine</td>
+                <td>High-liquidity magnets, vacuum zones, sweep risk</td>
+                <td>Sets entry zones and target likelihood</td>
+              </tr>
+              <tr>
+                <td>Big-Order Cluster Tracker</td>
+                <td>Institutional footprint and repeated block absorption</td>
+                <td>Boosts confidence when aligned with order flow</td>
+              </tr>
+              <tr>
+                <td>Regime & Risk Filter</td>
+                <td>Volatility state, spread stress, news windows</td>
+                <td>Converts weak setups to WAIT</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Signal Scoring Logic</h3>
+        <ol>
+          <li>Convert each module output into a normalized score from -1 (bearish) to +1 (bullish).</li>
+          <li>Apply adaptive weights by market regime (trend, range, high-volatility news).</li>
+          <li>Compute final confidence score and trigger only if confidence exceeds threshold.</li>
+          <li>Attach stop, invalidation level, and expected holding time to every signal.</li>
+        </ol>
+        <pre><code>finalScore = w1*orderFlow + w2*orderBook + w3*liquidity + w4*clusters + w5*riskFilter
+IF finalScore &gt; +0.65  =&gt; BUY
+IF finalScore &lt; -0.65  =&gt; SELL
+ELSE                  =&gt; WAIT</code></pre>
+      </section>
+
+      <section class="card" id="system-architecture">
+        <h2>3) System Architecture</h2>
+        <div class="grid two-col">
+          <article>
+            <h3>Data & Streaming Layer</h3>
+            <ul>
+              <li>Multi-exchange feeds: trades, L2/L3 order books, liquidations, and funding data.</li>
+              <li>WebSocket ingestion + failover providers for redundancy.</li>
+              <li>Kafka (or NATS) event bus for reliable, replayable streams.</li>
+              <li>Time-series store for backtesting and model recalibration.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Computation Layer</h3>
+            <ul>
+              <li>Low-latency microservices in Rust/Go for order book and order flow calculations.</li>
+              <li>Python ML service for confidence calibration and regime classification.</li>
+              <li>Feature store for shared signals: imbalance, absorption, sweep intensity.</li>
+              <li>Risk gateway enforcing max drawdown, spread limits, and kill-switch logic.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Signal Delivery Layer</h3>
+            <ul>
+              <li>Signal API with WebSocket push (&lt;250ms client update target).</li>
+              <li>Alert fan-out: in-app, desktop push, Telegram/Discord, email fallback.</li>
+              <li>Priority queue ensures high-confidence signals are sent first.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Frontend Layer</h3>
+            <ul>
+              <li>React + TypeScript dashboard with real-time chart overlays.</li>
+              <li>Order book ladder, tape, heatmap, and cluster markers.</li>
+              <li>One-look panel: direction, confidence, entry, stop, risk/reward.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="card" id="tech-stack">
+        <h2>4) Recommended Technology Stack</h2>
+        <div class="grid three-col">
+          <article>
+            <h3>Frontend</h3>
+            <p>React, TypeScript, Vite, TradingView Lightweight Charts, WebGL heatmap renderer, Tailwind/Chakra UI.</p>
+          </article>
+          <article>
+            <h3>Backend</h3>
+            <p>Rust/Go (latency-critical), Python (ML), FastAPI/gRPC, Redis cache, PostgreSQL + TimescaleDB, Kafka.</p>
+          </article>
+          <article>
+            <h3>Infrastructure</h3>
+            <p>Kubernetes, Docker, Prometheus/Grafana, OpenTelemetry, Cloudflare, multi-region deployment.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card" id="ux">
+        <h2>5) UX & Decision-Speed Features</h2>
+        <ul>
+          <li><strong>Signal-first layout:</strong> BUY/SELL card always pinned above charts.</li>
+          <li><strong>Confidence semantics:</strong> Color + numeric confidence + rationale chips ("Flow", "Book", "Cluster").</li>
+          <li><strong>No-wait automation:</strong> Auto-alert when setup enters user-defined confidence zone.</li>
+          <li><strong>Mode presets:</strong> Scalper, intraday, and conservative risk profiles.</li>
+          <li><strong>Explainability panel:</strong> Why signal fired, what could invalidate it, and expected volatility.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="delivery-roadmap">
+        <h2>6) Delivery Roadmap</h2>
+        <ol>
+          <li><strong>Phase 1 (Weeks 1-4):</strong> Data ingestion, order book engine, basic BUY/SELL/WAIT logic.</li>
+          <li><strong>Phase 2 (Weeks 5-8):</strong> Heatmap + cluster analytics, alerting, and UI dashboard.</li>
+          <li><strong>Phase 3 (Weeks 9-12):</strong> Regime-aware weighting, model validation, paper-trading simulator.</li>
+          <li><strong>Phase 4 (Weeks 13+):</strong> Production hardening, exchange expansion, user personalization.</li>
+        </ol>
+      </section>
     </main>
+
+    <footer>
+      <p>
+        Note: The ~80% target depends on instrument selection, market regime, transaction costs, and disciplined risk controls.
+      </p>
+    </footer>
 
     <script src="script.js"></script>
   </body>
