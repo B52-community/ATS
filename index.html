@@ -3,170 +3,166 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ATS Signal Engine Blueprint</title>
+    <title>ATS | Advanced Trading Signal Engine</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="hero">
-      <p class="eyebrow">Advanced Trading Software (ATS)</p>
-      <h1>Real-Time Signal Engine Plan & Design</h1>
-      <p>
-        A web-based trading intelligence platform that fuses order flow, order book dynamics,
-        liquidity heatmaps, and big-order clusters to produce fast buy/sell signals.
-      </p>
+      <div>
+        <p class="eyebrow">Advanced Trading Software</p>
+        <h1>Real-Time Buy/Sell Signal Engine</h1>
+        <p class="subtitle">
+          Production design for a web-based trading platform that combines order flow, order book,
+          liquidity heatmaps, and big-order clusters into fast, explainable BUY/SELL signals.
+        </p>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric-card">
+          <span>Target hit-rate</span>
+          <strong>~80%</strong>
+          <small>validated by regime-specific backtests</small>
+        </div>
+        <div class="metric-card">
+          <span>Signal latency target</span>
+          <strong>&lt; 250ms</strong>
+          <small>from feature update to user alert</small>
+        </div>
+      </div>
     </header>
 
     <main class="layout">
-      <section class="card" id="product-vision">
-        <h2>1) Product Vision & Outcome</h2>
-        <ul>
-          <li><strong>Primary objective:</strong> Deliver actionable BUY/SELL/WAIT signals in seconds, not minutes.</li>
-          <li><strong>Target users:</strong> Intraday futures, crypto, and FX traders requiring low-latency decisions.</li>
-          <li><strong>Performance goal:</strong> Aim for ~80% signal quality in controlled market regimes using strict validation and risk filters.</li>
-          <li><strong>Operator promise:</strong> Surface confidence, context, and invalidation points so users do not sit uncertain in the market.</li>
-        </ul>
+      <section class="card" id="engine-live">
+        <div class="card-head">
+          <h2>Live Signal Engine Console (Prototype)</h2>
+          <div id="engineStatus" class="status">Streaming</div>
+        </div>
+        <div class="engine-grid">
+          <article class="engine-panel signal-panel">
+            <h3>Current Decision</h3>
+            <div id="signalBadge" class="signal-badge" aria-live="polite">WAIT</div>
+            <p id="confidenceText" class="confidence">Confidence: 0%</p>
+            <p id="rationaleText" class="rationale">Waiting for multi-module alignment…</p>
+            <div class="risk-row">
+              <span id="entryValue">Entry: -</span>
+              <span id="stopValue">Stop: -</span>
+              <span id="targetValue">Target: -</span>
+            </div>
+          </article>
+
+          <article class="engine-panel">
+            <h3>Feature Scores (-1 to +1)</h3>
+            <ul id="featureList" class="feature-list"></ul>
+          </article>
+
+          <article class="engine-panel">
+            <h3>Recent Alerts</h3>
+            <ul id="alertList" class="alert-list"></ul>
+          </article>
+        </div>
       </section>
 
-      <section class="card" id="core-engine">
-        <h2>2) Signal Engine Design (BUY/SELL Core)</h2>
-        <div id="signalBadge" class="signal-badge" aria-live="polite">Live Example Signal: WAIT</div>
+      <section class="card" id="strategy-design">
+        <h2>Signal Engine Design</h2>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Module</th>
-                <th>What it Detects</th>
-                <th>Signal Influence</th>
+                <th>Component</th>
+                <th>Inputs</th>
+                <th>Core Logic</th>
+                <th>Contribution to Signal</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Order Flow Analyzer</td>
-                <td>Aggressive market buys/sells, CVD shifts, imbalance bursts</td>
-                <td>+Trend continuation score / -Reversal score</td>
+                <td>Trade tape, delta, CVD velocity, sweep prints</td>
+                <td>Detects aggressive buyer/seller dominance and absorption</td>
+                <td>Direction impulse and continuation probability</td>
               </tr>
               <tr>
                 <td>Order Book Intelligence</td>
-                <td>Spoofing probability, stacked liquidity, pull/flip behavior</td>
-                <td>Confirms or blocks false momentum entries</td>
+                <td>L2/L3 depth, pull/stack events, spread shifts</td>
+                <td>Scores true vs fake liquidity and near-price pressure</td>
+                <td>Filters spoof-driven false breakouts</td>
               </tr>
               <tr>
                 <td>Liquidity Heatmap Engine</td>
-                <td>High-liquidity magnets, vacuum zones, sweep risk</td>
-                <td>Sets entry zones and target likelihood</td>
+                <td>Resting liquidity distribution over time</td>
+                <td>Finds liquidity magnets, vacuum pockets, sweep zones</td>
+                <td>Optimizes entries, targets, and invalidation</td>
               </tr>
               <tr>
-                <td>Big-Order Cluster Tracker</td>
-                <td>Institutional footprint and repeated block absorption</td>
-                <td>Boosts confidence when aligned with order flow</td>
+                <td>Big Order Cluster Tracker</td>
+                <td>Block prints, repeated absorption footprints</td>
+                <td>Maps institutional participation and defended levels</td>
+                <td>Raises confidence when aligned with direction</td>
               </tr>
               <tr>
-                <td>Regime & Risk Filter</td>
-                <td>Volatility state, spread stress, news windows</td>
-                <td>Converts weak setups to WAIT</td>
+                <td>Regime/Risk Filter</td>
+                <td>Volatility regime, spread stress, news schedule</td>
+                <td>Suppresses weak or unstable setups</td>
+                <td>Converts low-quality conditions to WAIT</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h3>Signal Scoring Logic</h3>
-        <ol>
-          <li>Convert each module output into a normalized score from -1 (bearish) to +1 (bullish).</li>
-          <li>Apply adaptive weights by market regime (trend, range, high-volatility news).</li>
-          <li>Compute final confidence score and trigger only if confidence exceeds threshold.</li>
-          <li>Attach stop, invalidation level, and expected holding time to every signal.</li>
-        </ol>
-        <pre><code>finalScore = w1*orderFlow + w2*orderBook + w3*liquidity + w4*clusters + w5*riskFilter
-IF finalScore &gt; +0.65  =&gt; BUY
-IF finalScore &lt; -0.65  =&gt; SELL
-ELSE                  =&gt; WAIT</code></pre>
+        <pre><code>score =
+  0.30 * orderFlow
++ 0.20 * orderBook
++ 0.20 * liquidityHeatmap
++ 0.20 * bigOrderClusters
++ 0.10 * regimeRisk
+
+BUY  => score >= +0.65 AND confidence >= 0.72
+SELL => score <= -0.65 AND confidence >= 0.72
+WAIT => all other conditions</code></pre>
       </section>
 
-      <section class="card" id="system-architecture">
-        <h2>3) System Architecture</h2>
-        <div class="grid two-col">
-          <article>
-            <h3>Data & Streaming Layer</h3>
-            <ul>
-              <li>Multi-exchange feeds: trades, L2/L3 order books, liquidations, and funding data.</li>
-              <li>WebSocket ingestion + failover providers for redundancy.</li>
-              <li>Kafka (or NATS) event bus for reliable, replayable streams.</li>
-              <li>Time-series store for backtesting and model recalibration.</li>
-            </ul>
-          </article>
-          <article>
-            <h3>Computation Layer</h3>
-            <ul>
-              <li>Low-latency microservices in Rust/Go for order book and order flow calculations.</li>
-              <li>Python ML service for confidence calibration and regime classification.</li>
-              <li>Feature store for shared signals: imbalance, absorption, sweep intensity.</li>
-              <li>Risk gateway enforcing max drawdown, spread limits, and kill-switch logic.</li>
-            </ul>
-          </article>
-          <article>
-            <h3>Signal Delivery Layer</h3>
-            <ul>
-              <li>Signal API with WebSocket push (&lt;250ms client update target).</li>
-              <li>Alert fan-out: in-app, desktop push, Telegram/Discord, email fallback.</li>
-              <li>Priority queue ensures high-confidence signals are sent first.</li>
-            </ul>
-          </article>
-          <article>
-            <h3>Frontend Layer</h3>
-            <ul>
-              <li>React + TypeScript dashboard with real-time chart overlays.</li>
-              <li>Order book ladder, tape, heatmap, and cluster markers.</li>
-              <li>One-look panel: direction, confidence, entry, stop, risk/reward.</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section class="card" id="tech-stack">
-        <h2>4) Recommended Technology Stack</h2>
+      <section class="card" id="architecture">
+        <h2>Reference Architecture</h2>
         <div class="grid three-col">
           <article>
-            <h3>Frontend</h3>
-            <p>React, TypeScript, Vite, TradingView Lightweight Charts, WebGL heatmap renderer, Tailwind/Chakra UI.</p>
+            <h3>Data Ingestion</h3>
+            <ul>
+              <li>Exchange WebSockets + failover providers.</li>
+              <li>Raw stream normalization per symbol.</li>
+              <li>Kafka/NATS for event fanout + replay.</li>
+              <li>Heartbeat and feed drift monitoring.</li>
+            </ul>
           </article>
           <article>
-            <h3>Backend</h3>
-            <p>Rust/Go (latency-critical), Python (ML), FastAPI/gRPC, Redis cache, PostgreSQL + TimescaleDB, Kafka.</p>
+            <h3>Low-Latency Compute</h3>
+            <ul>
+              <li>Rust/Go services for order-book and flow math.</li>
+              <li>Feature store for per-symbol rolling metrics.</li>
+              <li>Python model service for confidence calibration.</li>
+              <li>Hard risk gateway before alert generation.</li>
+            </ul>
           </article>
           <article>
-            <h3>Infrastructure</h3>
-            <p>Kubernetes, Docker, Prometheus/Grafana, OpenTelemetry, Cloudflare, multi-region deployment.</p>
+            <h3>Signal Delivery</h3>
+            <ul>
+              <li>WebSocket API for live UI updates.</li>
+              <li>Push alerts: in-app, Telegram, Discord, email.</li>
+              <li>Per-user threshold and instrument filters.</li>
+              <li>Audit log for every signal + rationale.</li>
+            </ul>
           </article>
         </div>
       </section>
 
-      <section class="card" id="ux">
-        <h2>5) UX & Decision-Speed Features</h2>
-        <ul>
-          <li><strong>Signal-first layout:</strong> BUY/SELL card always pinned above charts.</li>
-          <li><strong>Confidence semantics:</strong> Color + numeric confidence + rationale chips ("Flow", "Book", "Cluster").</li>
-          <li><strong>No-wait automation:</strong> Auto-alert when setup enters user-defined confidence zone.</li>
-          <li><strong>Mode presets:</strong> Scalper, intraday, and conservative risk profiles.</li>
-          <li><strong>Explainability panel:</strong> Why signal fired, what could invalidate it, and expected volatility.</li>
-        </ul>
-      </section>
-
-      <section class="card" id="delivery-roadmap">
-        <h2>6) Delivery Roadmap</h2>
+      <section class="card" id="roadmap">
+        <h2>Implementation Plan</h2>
         <ol>
-          <li><strong>Phase 1 (Weeks 1-4):</strong> Data ingestion, order book engine, basic BUY/SELL/WAIT logic.</li>
-          <li><strong>Phase 2 (Weeks 5-8):</strong> Heatmap + cluster analytics, alerting, and UI dashboard.</li>
-          <li><strong>Phase 3 (Weeks 9-12):</strong> Regime-aware weighting, model validation, paper-trading simulator.</li>
-          <li><strong>Phase 4 (Weeks 13+):</strong> Production hardening, exchange expansion, user personalization.</li>
+          <li><strong>Phase 1:</strong> Core feed adapters, feature extraction, baseline signal scoring (BUY/SELL/WAIT).</li>
+          <li><strong>Phase 2:</strong> Heatmap + cluster detection, confidence model, live alert routing.</li>
+          <li><strong>Phase 3:</strong> Backtest harness, walk-forward validation, regime-based weighting.</li>
+          <li><strong>Phase 4:</strong> Multi-asset scaling, portfolio-level risk controls, user customization.</li>
         </ol>
       </section>
     </main>
-
-    <footer>
-      <p>
-        Note: The ~80% target depends on instrument selection, market regime, transaction costs, and disciplined risk controls.
-      </p>
-    </footer>
 
     <script src="script.js"></script>
   </body>

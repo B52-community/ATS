@@ -1,14 +1,14 @@
 :root {
-  --bg: #07111f;
-  --panel: #101d30;
-  --panel-soft: #162840;
-  --text: #d7e4f8;
-  --muted: #9cb4d7;
-  --accent: #4fd1c5;
-  --buy: #22c55e;
-  --sell: #ef4444;
-  --wait: #eab308;
-  --border: #27415f;
+  --bg: #070f1d;
+  --panel: #0f1d33;
+  --panel-soft: #162844;
+  --border: #29486d;
+  --text: #d9e6fb;
+  --muted: #96b3d8;
+  --accent: #5be0d5;
+  --buy: #16c172;
+  --sell: #ef4f67;
+  --wait: #f0c341;
 }
 
 * {
@@ -18,117 +18,180 @@
 body {
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: radial-gradient(circle at top, #12233d, var(--bg));
   color: var(--text);
-  line-height: 1.5;
+  background: radial-gradient(circle at top, #122946, var(--bg));
+  line-height: 1.45;
+}
+
+.hero,
+.layout {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.1rem;
 }
 
 .hero {
-  padding: 3rem 1.2rem 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
+  padding-top: 2rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2fr 1fr;
 }
 
 .eyebrow {
+  margin: 0;
   text-transform: uppercase;
-  color: var(--accent);
+  font-size: 0.78rem;
   letter-spacing: 0.08em;
-  font-size: 0.8rem;
-  margin-bottom: 0.25rem;
+  color: var(--accent);
 }
 
-h1,
-h2,
-h3 {
-  margin-top: 0;
+.subtitle {
+  color: var(--muted);
+  max-width: 68ch;
+}
+
+.hero-metrics {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.metric-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--panel-soft), var(--panel));
+  padding: 0.8rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.metric-card strong {
+  font-size: 1.3rem;
+}
+
+.metric-card small {
+  color: var(--muted);
 }
 
 .layout {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1.2rem 3rem;
   display: grid;
   gap: 1rem;
+  padding-bottom: 2.5rem;
 }
 
 .card {
-  background: linear-gradient(180deg, var(--panel-soft), var(--panel));
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 1rem 1.1rem;
+  background: linear-gradient(180deg, var(--panel-soft), var(--panel));
+  padding: 1rem;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.status {
+  background: rgba(91, 224, 213, 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(91, 224, 213, 0.5);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+.engine-grid,
+.grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.engine-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.engine-panel {
+  background: rgba(5, 12, 26, 0.45);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.8rem;
 }
 
 .signal-badge {
-  display: inline-block;
-  padding: 0.5rem 0.8rem;
-  border-radius: 999px;
-  font-weight: 700;
-  border: 1px solid var(--border);
-  margin-bottom: 0.8rem;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
 }
 
-.signal-buy {
+.buy {
   color: var(--buy);
-  border-color: color-mix(in oklab, var(--buy) 45%, white 10%);
 }
 
-.signal-sell {
+.sell {
   color: var(--sell);
-  border-color: color-mix(in oklab, var(--sell) 40%, white 10%);
 }
 
-.signal-wait {
+.wait {
   color: var(--wait);
-  border-color: color-mix(in oklab, var(--wait) 45%, white 10%);
 }
 
-.grid {
-  display: grid;
-  gap: 0.8rem;
+.confidence,
+.rationale {
+  margin: 0.3rem 0;
 }
 
-.two-col {
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+.risk-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 0.9rem;
 }
 
-.three-col {
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+.feature-list,
+.alert-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.feature-list li,
+.alert-list li {
+  margin-bottom: 0.35rem;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 0.94rem;
 }
 
 th,
 td {
-  border-bottom: 1px solid var(--border);
   text-align: left;
+  border-bottom: 1px solid var(--border);
   vertical-align: top;
-  padding: 0.6rem;
+  padding: 0.55rem;
 }
 
 th {
   color: var(--accent);
-  font-size: 0.9rem;
 }
 
 pre {
-  background: #081224;
+  background: #070f1e;
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 0.8rem;
   overflow-x: auto;
 }
 
-ul,
-ol {
-  margin-bottom: 0;
+.three-col {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-footer {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1.2rem 2rem;
-  color: var(--muted);
+@media (max-width: 880px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
 }
