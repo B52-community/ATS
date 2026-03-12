@@ -1,28 +1,27 @@
-# ATS
+# ATS - Advanced Trading Signal Engine (Web Blueprint + Prototype)
 
-Utility scripts and experiments.
+This project contains a web-based design and prototype console for an advanced trading signal engine.
 
-## Android ISO simulator
+## What it demonstrates
 
-Use `run_android_sim.py` to launch an Android-x86 ISO with QEMU.
+- A concrete architecture for generating **BUY / SELL / WAIT** signals.
+- Signal inputs from:
+  - Order flow analysis
+  - Order book intelligence
+  - Liquidity heatmaps
+  - Big-order cluster tracking
+  - Regime/risk filtering
+- A front-end live prototype that simulates streaming features, confidence scores, and alerts.
 
-### Requirements
-- `qemu-system-x86_64`
-- `qemu-img`
+## Run locally
 
-### Quick start
 ```bash
-python3 run_android_sim.py --iso /path/to/android-x86_64.iso
+python3 -m http.server 4173
 ```
 
-### Useful options
-```bash
-python3 run_android_sim.py \
-  --iso /path/to/android.iso \
-  --disk ./android_vm.qcow2 \
-  --ram 4096 \
-  --cpus 4 \
-  --disk-size 32
-```
+Open: `http://localhost:4173`
 
-Use `--dry-run` to preview commands and `--no-kvm` if KVM is unavailable.
+## Notes
+
+- The current implementation is a prototype UI and scoring simulation for planning/design.
+- Production deployment should use real market feeds, strict backtesting, and risk governance.

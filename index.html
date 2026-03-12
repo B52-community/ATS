@@ -3,15 +3,165 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Website</title>
+    <title>ATS | Advanced Trading Signal Engine</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>Welcome to ATS</h1>
-      <p>This is a simple website created for your project.</p>
-      <button id="greetBtn">Click me</button>
-      <p id="message" aria-live="polite"></p>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Advanced Trading Software</p>
+        <h1>Real-Time Buy/Sell Signal Engine</h1>
+        <p class="subtitle">
+          Production design for a web-based trading platform that combines order flow, order book,
+          liquidity heatmaps, and big-order clusters into fast, explainable BUY/SELL signals.
+        </p>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric-card">
+          <span>Target hit-rate</span>
+          <strong>~80%</strong>
+          <small>validated by regime-specific backtests</small>
+        </div>
+        <div class="metric-card">
+          <span>Signal latency target</span>
+          <strong>&lt; 250ms</strong>
+          <small>from feature update to user alert</small>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="card" id="engine-live">
+        <div class="card-head">
+          <h2>Live Signal Engine Console (Prototype)</h2>
+          <div id="engineStatus" class="status">Streaming</div>
+        </div>
+        <div class="engine-grid">
+          <article class="engine-panel signal-panel">
+            <h3>Current Decision</h3>
+            <div id="signalBadge" class="signal-badge" aria-live="polite">WAIT</div>
+            <p id="confidenceText" class="confidence">Confidence: 0%</p>
+            <p id="rationaleText" class="rationale">Waiting for multi-module alignment…</p>
+            <div class="risk-row">
+              <span id="entryValue">Entry: -</span>
+              <span id="stopValue">Stop: -</span>
+              <span id="targetValue">Target: -</span>
+            </div>
+          </article>
+
+          <article class="engine-panel">
+            <h3>Feature Scores (-1 to +1)</h3>
+            <ul id="featureList" class="feature-list"></ul>
+          </article>
+
+          <article class="engine-panel">
+            <h3>Recent Alerts</h3>
+            <ul id="alertList" class="alert-list"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="card" id="strategy-design">
+        <h2>Signal Engine Design</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Inputs</th>
+                <th>Core Logic</th>
+                <th>Contribution to Signal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Order Flow Analyzer</td>
+                <td>Trade tape, delta, CVD velocity, sweep prints</td>
+                <td>Detects aggressive buyer/seller dominance and absorption</td>
+                <td>Direction impulse and continuation probability</td>
+              </tr>
+              <tr>
+                <td>Order Book Intelligence</td>
+                <td>L2/L3 depth, pull/stack events, spread shifts</td>
+                <td>Scores true vs fake liquidity and near-price pressure</td>
+                <td>Filters spoof-driven false breakouts</td>
+              </tr>
+              <tr>
+                <td>Liquidity Heatmap Engine</td>
+                <td>Resting liquidity distribution over time</td>
+                <td>Finds liquidity magnets, vacuum pockets, sweep zones</td>
+                <td>Optimizes entries, targets, and invalidation</td>
+              </tr>
+              <tr>
+                <td>Big Order Cluster Tracker</td>
+                <td>Block prints, repeated absorption footprints</td>
+                <td>Maps institutional participation and defended levels</td>
+                <td>Raises confidence when aligned with direction</td>
+              </tr>
+              <tr>
+                <td>Regime/Risk Filter</td>
+                <td>Volatility regime, spread stress, news schedule</td>
+                <td>Suppresses weak or unstable setups</td>
+                <td>Converts low-quality conditions to WAIT</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <pre><code>score =
+  0.30 * orderFlow
++ 0.20 * orderBook
++ 0.20 * liquidityHeatmap
++ 0.20 * bigOrderClusters
++ 0.10 * regimeRisk
+
+BUY  => score >= +0.65 AND confidence >= 0.72
+SELL => score <= -0.65 AND confidence >= 0.72
+WAIT => all other conditions</code></pre>
+      </section>
+
+      <section class="card" id="architecture">
+        <h2>Reference Architecture</h2>
+        <div class="grid three-col">
+          <article>
+            <h3>Data Ingestion</h3>
+            <ul>
+              <li>Exchange WebSockets + failover providers.</li>
+              <li>Raw stream normalization per symbol.</li>
+              <li>Kafka/NATS for event fanout + replay.</li>
+              <li>Heartbeat and feed drift monitoring.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Low-Latency Compute</h3>
+            <ul>
+              <li>Rust/Go services for order-book and flow math.</li>
+              <li>Feature store for per-symbol rolling metrics.</li>
+              <li>Python model service for confidence calibration.</li>
+              <li>Hard risk gateway before alert generation.</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Signal Delivery</h3>
+            <ul>
+              <li>WebSocket API for live UI updates.</li>
+              <li>Push alerts: in-app, Telegram, Discord, email.</li>
+              <li>Per-user threshold and instrument filters.</li>
+              <li>Audit log for every signal + rationale.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="card" id="roadmap">
+        <h2>Implementation Plan</h2>
+        <ol>
+          <li><strong>Phase 1:</strong> Core feed adapters, feature extraction, baseline signal scoring (BUY/SELL/WAIT).</li>
+          <li><strong>Phase 2:</strong> Heatmap + cluster detection, confidence model, live alert routing.</li>
+          <li><strong>Phase 3:</strong> Backtest harness, walk-forward validation, regime-based weighting.</li>
+          <li><strong>Phase 4:</strong> Multi-asset scaling, portfolio-level risk controls, user customization.</li>
+        </ol>
+      </section>
     </main>
 
     <script src="script.js"></script>
